@@ -1,3 +1,11 @@
+import os
+import time
+
+from zeep import Client
+from lxml import etree
+
+client = Client('https://www.pttor.com/OilPrice.asmx?WSDL')
+
 def wel():
     print("=" * 80)
     print("!", " " * 76, "!")
@@ -52,44 +60,41 @@ def last():
         break
 
 
-if name in "main":
-    check = True
-    while check:
-        # Information.
-        wel()
-        # Update data from website.
-        name = ['none']
-        price = [0]
-        getOilPrice()
-        # Print the manu.
-        menuoil()
-        print("Welcome to our Oil Station . . .")
-        while do:
-            g = '2'
-            k = '0'
-            # Choose option.
-            print("Price to litre[0] OR Litre to price[1].")
-            while g > '1' or not check_numeric(g):
-                g = input("Please choose [0] or [1] : ")
-            g = int(g)
-            while (k == '0') or not check_numeric(k):
-                k = input(f"Select a petrol: (1 - {name[k] - 1}) : ")
-            k = int(k)
-            # Calculate litre.
-            if g == 0:
-                m = input("Money : ")
-                while not check_numeric(m):
-                    m = input("Money : ")
-                m = float(m)
-                r = round(m / price[k], 2)
-                mes(k, m, r)
-            else:
-                m = input("Litre : ")
-                while not check_numeric(m):
-                    m = input("Money : ")
-                m = float(m)
-                res = round(m * price[k], 2)
-                mes(k, res, m)
-        # Come back to the manu.
-        if last():
-            print("Thank you for using the service.")
+# Information.
+wel()
+# Update data from website.
+name = ['none']
+price = [0]
+getOilPrice()
+# Print the manu.
+menuoil()
+print("Welcome to our Oil Station . . .")
+while True:
+    g = '2'
+    k = '0'
+    # Choose option.
+    print("Price to litre[0] OR Litre to price[1].")
+    while g > '1' or not check_numeric(g):
+        g = input("Please choose [0] or [1] : ")
+    g = int(g)
+    while (k == '0') or not check_numeric(k):
+        k = input(f"Select a petrol: (1 - {name[k] - 1}) : ")
+    k = int(k)
+    # Calculate litre.
+    if g == 0:
+        m = input("Money : ")
+        while not check_numeric(m):
+            m = input("Money : ")
+        m = float(m)
+        r = round(m / price[k], 2)
+        mes(k, m, r)
+    else:
+        m = input("Litre : ")
+        while not check_numeric(m):
+            m = input("Money : ")
+        m = float(m)
+        res = round(m * price[k], 2)
+        mes(k, res, m)
+# Come back to the manu.
+if last():
+    print("Thank you for using the service.")
